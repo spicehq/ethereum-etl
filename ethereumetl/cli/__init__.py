@@ -40,6 +40,7 @@ from ethereumetl.cli.export_geth_traces import export_geth_traces
 from ethereumetl.cli.export_contracts import export_contracts
 from ethereumetl.cli.export_blocks_and_transactions import export_blocks_and_transactions
 from ethereumetl.cli.export_all import export_all
+from ethereumetl.cli.insert_tokens import insert_tokens_from_parquet
 import click
 from blockchainetl.logging_utils import logging_basic_config
 logging_basic_config()
@@ -67,6 +68,7 @@ cli.add_command(export_geth_traces, "export_geth_traces")
 cli.add_command(extract_geth_traces, "extract_geth_traces")
 cli.add_command(extract_contracts, "extract_contracts")
 cli.add_command(extract_tokens, "extract_tokens")
+cli.add_command(insert_tokens_from_parquet, "insert_tokens_from_parquet")
 
 # streaming
 cli.add_command(stream, "stream")
