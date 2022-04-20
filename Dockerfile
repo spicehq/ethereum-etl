@@ -1,15 +1,14 @@
-FROM python:3.6
-MAINTAINER Evgeny Medvedev <evge.medvedev@gmail.com>
-ENV PROJECT_DIR=ethereum-etl
+FROM ubuntu
 
-RUN mkdir /$PROJECT_DIR
-WORKDIR /$PROJECT_DIR
-COPY . .
-RUN pip install --upgrade pip && pip install -e /$PROJECT_DIR/[streaming]
+RUN apt-get update
+RUN apt-get install ca-certificates -y
+RUN apt-get install python3 python3-pip python3-venv git libpq-dev -y
 
-# Add Tini
-ENV TINI_VERSION v0.18.0
-ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /tini
-RUN chmod +x /tini
+WORKDIR /ethereum-etl
 
-ENTRYPOINT ["/tini", "--", "python", "ethereumetl"]
+RUN git clone -b phillip/load-parquet https://github.com/spicehq/ethereum-etl.git .
+
+WORKDIR /ethereum-etl
+RUN python3 -m venv venv
+RUN venv/bin/pip3 install -r requirements.txt
+RUN venv/bin/python3 /ethereum-etl/ethereumetl.py --version
