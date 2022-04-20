@@ -9,3 +9,5 @@ base58
 requests
 sqlalchemy
 psycopg2
+pandas
+pyarrow
